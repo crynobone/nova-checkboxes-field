@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import flatMap from 'lodash/flatMap';
+
 export default {
     props: ["index", "resource", "resourceName", "resourceId", "field"],
 
@@ -61,7 +63,7 @@ export default {
                 return this.field.value.includes(option);
             }
 
-            return _.flatMap(this.field.value).includes(option);
+            return flatMap(this.field.value).includes(option);
         },
     },
 };

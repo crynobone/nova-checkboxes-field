@@ -25,6 +25,10 @@
 </template>
 
 <script>
+import flatMap from 'lodash/flatMap';
+import keys from 'lodash/keys';
+import map from 'lodash/map';
+
 export default {
     props: ["resourceName", "field"],
 
@@ -38,12 +42,9 @@ export default {
 
             let availableOptions = {};
 
-            _.keys(options).map((group) =>
-                _.keys(options[group]).map(
-                    (option) =>
-                        (availableOptions[option] = options[group][option])
-                )
-            );
+            map(keys(options), (group) => {
+                map(keys(options[group]), (option) => (availableOptions[option] = options[group][option]))
+            })
 
             return availableOptions;
         },
@@ -59,7 +60,7 @@ export default {
                 return this.field.value.includes(option);
             }
 
-            return _.flatMap(this.field.value).includes(option);
+            return flatMap(this.field.value).includes(option);
         },
     },
 };
